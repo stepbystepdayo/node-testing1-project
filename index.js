@@ -8,6 +8,19 @@
  */
 function trimProperties(obj) {
   // ✨ implement
+  // first, we need to print out the object
+  // console.log(Object.keys(obj));
+  // deconstruction of all things inside the obj
+  // use Object.keys()
+  let newObj = {};
+  Object.keys(obj).map((key) => {
+    // console.log(key.trim());
+    newString = key.trim();
+    // console.log(newString);
+    newObj = { ...newObj, [key]: newString };
+  });
+  // console.log(newObj);
+  return newObj;
 }
 
 /**
@@ -19,7 +32,17 @@ function trimProperties(obj) {
  * trimPropertiesMutation({ name: '  jane  ' }) // returns the object mutated in place { name: 'jane' }
  */
 function trimPropertiesMutation(obj) {
+  // console.log(Object.keys(obj));
   // ✨ implement
+  // for (let prop in obj) {
+  //   obj[prop] = obj[prop].trim();
+  // }
+  // return obj;
+  Object.keys(obj).forEach((key) => {
+    obj[key] = obj[key].trim();
+  });
+  // console.log("completed obj", obj);
+  return obj;
 }
 
 /**
@@ -32,6 +55,20 @@ function trimPropertiesMutation(obj) {
  */
 function findLargestInteger(integers) {
   // ✨ implement
+  // first we have to loop over the
+  // integers = > [{},{},{}]
+  let max = 0;
+  integers.map((integer) => {
+    // console.log(integer);
+    // console.log(integer.integer);
+    // i think we should loop over integer.integer, and find the biggest number, and replace max with biggest number
+    // max = integer.integer;
+    if (max < integer.integer) {
+      max = integer.integer;
+    }
+  });
+  // console.log("answer is: ", max);
+  return max;
 }
 
 class Counter {
@@ -41,6 +78,7 @@ class Counter {
    */
   constructor(initialNumber) {
     // ✨ initialize whatever properties are needed
+    this.count = initialNumber;
   }
 
   /**
@@ -57,6 +95,11 @@ class Counter {
    */
   countDown() {
     // ✨ implement
+    // return this.count > 0 ? this.count-- : 0;
+    if (this.count > 0) {
+      return this.count--;
+    }
+    return this.count;
   }
 }
 
@@ -65,7 +108,8 @@ class Seasons {
    * [Exercise 5A] Seasons creates a seasons object
    */
   constructor() {
-    // ✨ initialize whatever properties are needed
+    this.seasons = ["summer", "fall", "winter", "spring"];
+    this.currentSeason = 0;
   }
 
   /**
@@ -81,7 +125,14 @@ class Seasons {
    * seasons.next() // returns "summer"
    */
   next() {
-    // ✨ implement
+    const result = this.seasons[this.currentSeason];
+    if (this.currentSeason === 3) {
+      this.currentSeason = 0;
+    } else {
+      this.currentSeason++;
+    }
+
+    return result;
   }
 }
 
@@ -93,9 +144,11 @@ class Car {
    * @param {number} mpg - miles the car can drive per gallon of gas
    */
   constructor(name, tankSize, mpg) {
-    this.odometer = 0 // car initilizes with zero miles
-    this.tank = tankSize // car initiazes full of gas
+    this.odometer = 0; // car initilizes with zero miles
+    this.tank = tankSize; // car initiazes full of gas
     // ✨ initialize whatever other properties are needed
+    this.tankSize = tankSize;
+    this.mpg = mpg;
   }
 
   /**
@@ -113,6 +166,16 @@ class Car {
    */
   drive(distance) {
     // ✨ implement
+    const milesCanDrive = this.tank * this.mpg;
+    if (distance <= milesCanDrive) {
+      this.odometer = this.odometer + distance;
+      this.tank = this.tank - distance / this.mpg;
+    } else {
+      this.tank = 0;
+      this.odometer = this.odometer + milesCanDrive;
+    }
+
+    return this.odometer;
   }
 
   /**
@@ -127,7 +190,13 @@ class Car {
    * focus.refuel(99) // returns 600 (tank only holds 20)
    */
   refuel(gallons) {
-    // ✨ implement
+    const gallonsThatFit = this.tankSize - this.tank;
+    if (gallons <= gallonsThatFit) {
+      this.tank = this.tank + gallons;
+    } else {
+      this.tank = this.tankSize;
+    }
+    return this.tank * this.mpg;
   }
 }
 
@@ -144,8 +213,8 @@ class Car {
  *    // result is false
  * })
  */
-function isEvenNumberAsync(number) {
-  // ✨ implement
+async function isEvenNumberAsync(number) {
+  return number % 2 === 0 || false;
 }
 
 module.exports = {
@@ -156,4 +225,4 @@ module.exports = {
   Counter,
   Seasons,
   Car,
-}
+};
